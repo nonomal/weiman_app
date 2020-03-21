@@ -6,81 +6,210 @@ class ActivityRank extends StatefulWidget {
 }
 
 class _ActivityRank extends State<ActivityRank> {
-  final List<Book> books = [];
-  int page = 1;
-  LoadMoreD _d;
+  final names = [
+    "健身教练",
+    "弱点",
+    "漂亮干姊姊",
+    "美丽新世界",
+    "Run away",
+    "下女, 初希",
+    "重考生",
+    "欲求王",
+    "兼职奶妈",
+    "秘密教学",
+    "新生日记",
+    "偷窥",
+    "姊妹与继父",
+    "实习老师",
+    "迎新小套房",
+    "阿姨的秘密",
+    "正妹小主管",
+    "冲突",
+    "秘书的潜规则",
+    "心机打工妹",
+    "协议换爱",
+    "老师",
+    "S-Mate",
+    "隔壁母女",
+    "媳妇的诱惑",
+    "老婆的闺蜜",
+    "老师，好久不见",
+    "她的高跟鞋",
+    "校园LIVE秀",
+    "我要抢走她",
+    "报告夫人",
+    "隐密的诱惑",
+    "人妻姐姐",
+    "朋友的姐姐",
+    "租赁女孩",
+    "玩转女上司",
+    "女上男下",
+    "兄妹关系",
+    "女大生世晶:无法自拔",
+    "别人的老婆",
+    "驯服小姨子",
+    "亲爱的大叔",
+    "新闻主播",
+    "调教妻子",
+    "我喜欢他的女人",
+    "邻居姐姐是AV导演",
+    "Roommate",
+    "超乎想像",
+    "邻居人妻",
+    "甜蜜假期",
+    "爱徒",
+    "夺爱的滋味",
+    "岳母家的刺激生活",
+    "同学会",
+    "初恋豚鼠",
+    "新媳妇",
+    "雨声的诱惑",
+    "瘾私",
+    "计划出轨",
+    "一个不会拒绝的女人",
+    "傀儡",
+    "共享情人",
+    "解禁:初始的快感",
+    "母猪养成计划",
+    "解放一夏",
+    "人夫的悸动",
+    "干爹我还要",
+    "与前妻同居",
+    "前女友",
+    "躲债夫妻档",
+    "姊夫,硬起来",
+    "异乡人:意外桃花源",
+    "性溢房屋",
+    "致命游戏",
+    "偷偷爱",
+    "She：我的魅惑女友",
+    "我的M属性学姐",
+    "初恋陷阱",
+    "H校园",
+    "退货女友",
+    "哥哥的秘书",
+    "制作人:练习生",
+    "卖身契约",
+    "KTV情人",
+    "朋友, 女朋友",
+    "窥视",
+    "嘘!姐姐的诱惑",
+    "爱情店到店",
+    "迷人的她",
+    "三人行？",
+    "继母",
+    "有夫同享",
+    "她们的恶作剧",
+    "朋友妻",
+    "女狼办公室",
+    "我的专属女仆",
+    "夫人的礼物",
+    "适合劈腿的好日子",
+    "哪有学妹这么乖",
+    "女神网咖",
+    "同居捉迷藏",
+    "我们的非常关系",
+    "阴湿路",
+    "虐妻游戏",
+    "那些学姊教我的事",
+    "邻居的逆袭",
+    "家有色鬼",
+    "梦魇",
+    "初恋物语",
+    "本能解决师",
+    "流浪猫",
+    "男公关与富家女",
+    "家教老师",
+    "令人上瘾的妳",
+    "赎罪营",
+    "致命的妳",
+    "灰姑娘的哥哥们",
+    "我的继母是寡妇",
+    "H-Mate",
+    "那家伙的女人",
+    "按摩妹女友",
+    "羞愧的房间",
+    "意外的邂逅",
+    "奴隶",
+    "养女",
+    "学妹别放肆",
+    "巧手妇产科",
+    "上司的妻子",
+    "同居",
+    "魔女的丑闻",
+    "食物链",
+    "偶像养成记",
+    "漂亮姐姐",
+    "Erostica~征服美女记",
+    "女演员",
+    "狼爪下的少女",
+    "NEW FACE",
+    "性感的高手们",
+    "小一轮的纯爱女孩",
+    "青春:逆龄小鲜肉",
+    "我的大叔",
+    "我的变态女友",
+    "二十岁",
+    "由莉的秘密",
+    "啪啪啪调教所",
+    "离婚报告书",
+    "反乌托邦游戏",
+    "神秘的姊妹",
+    "秘密的痴汉教学",
+    "爸爸的女人",
+    "江南罗曼史",
+    "傻瓜欧巴",
+    "有什么了不起的",
+    "那家，情况",
+    "隔壁女房客",
+    "校园梦精记",
+    "销魂之手",
+    "莉莉丝的救赎 第二季",
+    "调教家政妇",
+    "是说让我用身体赔偿吗…？",
+    "淫魂别上床",
+    "你劈腿了吗?",
+    "15少女漂流记",
+    "老婆回来了",
+    "湿乐园",
+    "罪与罚",
+    "妻子的炮友",
+    "索尔米的频道",
+    "被继父和哥哥突入最深处",
+    "亲爱的 我劈腿了",
+    "Revenge",
+    "夜话册",
+    "制服的诱惑",
+    "肉色传记",
+    "超能力者",
+    "善良的她",
+    "运动妹子"
+  ];
 
   @override
   void initState() {
     super.initState();
-    _d = LoadMoreD(reload);
-  }
-
-  void reload() {
-    onLoadMore();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('月排行榜')),
-      body: Container(
-        child: LoadMore(
-          isFinish: page >= 10,
-          onLoadMore: onLoadMore,
-          delegate: _d,
-          child: ListView.builder(
-            itemBuilder: (BuildContext context, int index) {
-              return WidgetBook(
-                books[index],
-                subtitle: books[index].author,
-              );
+      body: ListView.builder(
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            title: Text(names[index]),
+            subtitle: Text('搜索： ${names[index]}'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => ActivitySearch(search: names[index])));
             },
-            itemCount: books.length,
-          ),
-        ),
+          );
+        },
+        itemCount: names.length,
       ),
     );
-  }
-
-  Future<bool> onLoadMore() async {
-    bool isSuccess = false;
-    try {
-      books.addAll(await HttpHHMH39.instance.getMonthList(page: page));
-      isSuccess = true;
-      print('load $page');
-      page++;
-      setState(() {});
-    } catch (e) {
-      print('$e $page');
-    }
-    return isSuccess;
-  }
-}
-
-class LoadMoreD extends LoadMoreDelegate {
-  final void Function() reload;
-
-  LoadMoreD(this.reload);
-
-  @override
-  Widget buildChild(LoadMoreStatus status,
-      {builder = DefaultLoadMoreTextBuilder.chinese}) {
-    Widget widget;
-    switch (status) {
-      case LoadMoreStatus.idle:
-        widget = SizedBox();
-        break;
-      case LoadMoreStatus.loading:
-        widget = SafeArea(child: Center(child: Text('读取中')));
-        break;
-      case LoadMoreStatus.fail:
-        widget = SafeArea(child: Center(child: Text('读取失败，点击再次尝试')));
-        break;
-      case LoadMoreStatus.nomore:
-        widget = SafeArea(child: Center(child: Text('就这些了')));
-        break;
-    }
-    return widget;
   }
 }

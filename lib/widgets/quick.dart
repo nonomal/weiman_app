@@ -11,13 +11,7 @@ class QuickBook extends DraggableItem {
       {@required this.book, @required this.context}) {
     child = GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (ctx) => ActivityBook(
-                      book: book,
-                      heroTag: '$heroTag ${book.aid}',
-                    )));
+        openBook(context, book, '$heroTag ${book.aid}');
       },
       child: Stack(
         children: <Widget>[

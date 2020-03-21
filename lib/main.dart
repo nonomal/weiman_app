@@ -85,6 +85,7 @@ FirebaseAnalytics analytics;
 FirebaseAnalyticsObserver observer;
 
 const bool isDevMode = !bool.fromEnvironment('dart.vm.product');
+int version;
 
 void main() async {
   FlutterError.onError = (FlutterErrorDetails details) {};
@@ -103,7 +104,7 @@ void main() async {
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
   ]);
   final PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
+  version = int.parse(packageInfo.buildNumber);
   runApp(
     MultiProvider(
       providers: [

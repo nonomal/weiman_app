@@ -10,6 +10,7 @@ class Book {
   final List<Chapter> chapters;
   final int chapterCount;
   final bool fromCache;
+  final int version;
 
   History history;
 
@@ -23,6 +24,7 @@ class Book {
     this.chapterCount: 0,
     this.fromCache: false,
     this.history,
+    this.version: 0,
   });
 
   static Future<void> initCachePath() async {
@@ -48,6 +50,7 @@ class Book {
       'avatar': avatar,
       'author': author,
       'chapterCount': chapterCount,
+      'version': version,
     };
     if (history != null) data['history'] = history.toJson();
     return data;
@@ -55,13 +58,13 @@ class Book {
 
   static Book fromJson(Map<String, dynamic> json) {
     final book = Book(
-      aid: json['aid'],
-      name: json['name'],
-      avatar: json['avatar'],
-      author: json['author'],
-      description: json['description'],
-      chapterCount: json['chapterCount'] ?? 0,
-    );
+        aid: json['aid'],
+        name: json['name'],
+        avatar: json['avatar'],
+        author: json['author'],
+        description: json['description'],
+        chapterCount: json['chapterCount'] ?? 0,
+        version: json['version'] ?? 0);
     if (json.containsKey('history'))
       book.history = History.fromJson(json['history']);
     return book;
@@ -78,6 +81,7 @@ class Book {
           'author': author,
           'avatar': avatar,
           'description': description,
+          'version': version,
           'chapters':
               chapters.map<String>((chapter) => chapter.toString()).toList(),
         },
@@ -98,6 +102,7 @@ class Book {
         avatar: json['avatar'],
         description: json['description'],
         author: json['author'],
+        version: json['version'] ?? 0,
         fromCache: true,
         chapters: chapters.map((str) => Chapter.fromJsonString(str)).toList(),
         chapterCount: chapters.length,
@@ -138,7 +143,8 @@ class Chapter {
   static List<String> fromCache(Book book, Chapter chapter) {
     final file =
         File(path.join(Book.cachePath, '${book.aid}_${chapter.cid}.json'));
-    if (file.existsSync()) return  List<String>.from(jsonDecode(file.readAsStringSync()));
+    if (file.existsSync())
+      return List<String>.from(jsonDecode(file.readAsStringSync()));
     return null;
   }
 

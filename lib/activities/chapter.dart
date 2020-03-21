@@ -192,7 +192,7 @@ class _ChapterContentView extends State<ChapterContentView> {
       return true;
     }
     try {
-      images.addAll(await HttpHHMH39.instance
+      images.addAll(await HttpHanManJia.instance
           .getChapterImages(widget.book, widget.chapter)
           .timeout(Duration(seconds: 10)));
     } catch (e) {

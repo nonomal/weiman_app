@@ -1,24 +1,43 @@
 part of '../main.dart';
 
-class ActivitySearch extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Search();
-  }
-}
+class ActivitySearch extends StatefulWidget {
+  final String search;
 
-class Search extends StatefulWidget {
+  const ActivitySearch({Key key, this.search = ''}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return SearchState();
   }
 }
 
-class SearchState extends State<Search> {
-  TextEditingController _controller = TextEditingController();
+class SearchState extends State<ActivitySearch>
+    with SingleTickerProviderStateMixin {
+  TabController _tabController;
+  TextEditingController _controller;
   GlobalKey<PullToRefreshNotificationState> _refresh = GlobalKey();
   final List<Book> _books = [];
   bool loading;
+
+  @override
+  initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: 2);
+    _controller = TextEditingController();
+    if (widget.search.isNotEmpty) {
+      _controller.text = widget.search;
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        this.startSearch();
+      });
+    }
+  }
+
+  @override
+  dispose() {
+    _tabController.dispose();
+    _controller.dispose();
+    super.dispose();
+  }
 
   void submit() {
     _refresh.currentState
@@ -32,7 +51,7 @@ class SearchState extends State<Search> {
     });
     _books.clear();
     try {
-      final List<Book> books = await HttpHHMH39.instance
+      final List<Book> books = await HttpHanManJia.instance
           .searchBook(_controller.text)
           .timeout(Duration(seconds: 5));
       _books.addAll(books);
@@ -41,6 +60,7 @@ class SearchState extends State<Search> {
       loading = false;
       return false;
     }
+    setState(() {});
     return true;
   }
 
@@ -76,7 +96,7 @@ class SearchState extends State<Search> {
               ),
               textAlign: TextAlign.left,
               controller: _controller,
-              autofocus: true,
+              autofocus: widget.search.isEmpty,
               textInputAction: TextInputAction.search,
               onSubmitted: (String name) {
                 focusNode.unfocus();
@@ -92,35 +112,55 @@ class SearchState extends State<Search> {
             ),
           ),
         ),
+        bottom: TabBar(
+          controller: _tabController,
+          // isScrollable: true,
+          tabs: [
+            Tab(text: "源1"),
+            Tab(text: "其它源"),
+          ],
+        ),
       ),
-      body: PullToRefreshNotification(
-        key: _refresh,
-        onRefresh: startSearch,
-        child: CustomScrollView(slivers: [
-          PullToRefreshContainer((info) => SliverPullToRefreshHeader(
-                info: info,
-                onTap: submit,
-              )),
-          SliverLayoutBuilder(
-            builder: (_, __) {
-              if (loading == null)
-                return SliverFillRemaining(
-                    child: Center(child: Text('输入关键词搜索')));
-              if (loading) return SliverToBoxAdapter();
-              if (_books.length == 0) {
-                return SliverFillRemaining(child: Center(child: Text('一本也没有')));
-              }
-              return SliverList(
-                delegate: SliverChildBuilderDelegate((_, i) {
-                  return WidgetBook(
-                    _books[i],
-                    subtitle: _books[i].author,
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          PullToRefreshNotification(
+            key: _refresh,
+            onRefresh: startSearch,
+            child: CustomScrollView(slivers: [
+              PullToRefreshContainer((info) => SliverPullToRefreshHeader(
+                    info: info,
+                    onTap: submit,
+                  )),
+              SliverLayoutBuilder(
+                builder: (_, __) {
+                  if (loading == null)
+                    return SliverFillRemaining(
+                        child: Center(child: Text('输入关键词搜索')));
+                  if (loading) return SliverToBoxAdapter();
+                  if (_books.length == 0) {
+                    return SliverFillRemaining(
+                        child: Center(child: Text('一本也没有')));
+                  }
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate((_, i) {
+                      return WidgetBook(
+                        _books[i],
+                        subtitle: _books[i].author,
+                      );
+                    }, childCount: _books.length),
                   );
-                }, childCount: _books.length),
-              );
-            },
+                },
+              ),
+            ]),
           ),
-        ]),
+          Center(
+            child: Text(
+              '换源功能，请关注后续新版本',
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+        ],
       ),
     );
   }

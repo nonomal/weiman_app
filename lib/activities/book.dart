@@ -47,13 +47,13 @@ class BookState extends State<ActivityBook> {
       print('有缓存');
       book = cacheBook;
       updateBook();
-      loadBookFromInternet().then((_) => updateBook());
+      loadBookFromInternet();
     }
     return true;
   }
 
   Future<dynamic> loadBookFromInternet() async {
-    final internetBook = await HttpHHMH39.instance
+    final internetBook = await HttpHanManJia.instance
         .getBook(widget.book.aid)
         .timeout(Duration(seconds: 10));
     book = internetBook;
@@ -83,15 +83,14 @@ class BookState extends State<ActivityBook> {
             context: context,
             builder: (_) => AlertDialog(
                   title: Text('确认取消收藏？'),
-                  content: Text('删除这本藏书后，首页的快速导航也会删除这本藏书'),
+                  // content: Text('删除这本藏书后，首页的快速导航也会删除这本藏书'),
                   actions: [
                     FlatButton(
                       child: Text('确认'),
                       onPressed: () => Navigator.pop(context, true),
                     ),
-                    FlatButton(
+                    RaisedButton(
                       child: Text('取消'),
-                      textColor: Colors.blue,
                       onPressed: () => Navigator.pop(context, false),
                     ),
                   ],
@@ -113,20 +112,11 @@ class BookState extends State<ActivityBook> {
   IndexedWidgetBuilder buildChapters(List<Chapter> chapters) {
     IndexedWidgetBuilder builder = (BuildContext context, int index) {
       final chapter = chapters[index];
-      Widget child;
-      if (chapter.avatar == null) {
-        child = ListTile(
-          leading: Text('[已看]', style: TextStyle(color: Colors.orange)),
-          title: Text(chapter.cname),
-          onTap: () {},
-        );
-      } else {
-        child = WidgetChapter(
-          chapter: chapter,
-          onTap: _openChapter,
-          read: chapter.cid == book.history?.cid,
-        );
-      }
+      Widget child = WidgetChapter(
+        chapter: chapter,
+        onTap: _openChapter,
+        read: chapter.cid == book.history?.cid,
+      );
       if (index < chapters.length - 1)
         child = DecoratedBox(
           decoration: _Main._border,

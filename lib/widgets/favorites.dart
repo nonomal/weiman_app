@@ -6,7 +6,6 @@ class FavoriteData extends ChangeNotifier {
   final Map<String, Book> all = {}, // 所有收藏
       inWeek = {}, // 7天内看过的收藏
       other = {}; // 其他收藏
-  bool _loading;
 
   FavoriteData() {
     loadBooksList();
@@ -58,15 +57,16 @@ class FavoriteData extends ChangeNotifier {
     Book currentBook, newBook;
     for (var i = 0; i < _books.length; i++) {
       currentBook = _books[keys.elementAt(i)];
+      if (currentBook.version == 0) continue;
       try {
-        newBook = await HttpHHMH39.instance
+        newBook = await HttpHanManJia.instance
             .getBook(currentBook.aid)
             .timeout(Duration(seconds: 8));
         int different = newBook.chapterCount - currentBook.chapterCount;
         hasNews[currentBook.aid] = different;
         if (different > 0) {
-          newBook.history = Data.getHistories()[newBook.aid]?.history;
-          Data.addFavorite(newBook);
+          // newBook.history = Data.getHistories()[newBook.aid]?.history;
+          // Data.addFavorite(newBook);
           newBook.saveBookCache();
         }
       } catch (e) {
@@ -115,7 +115,30 @@ class _FavoriteList extends State<FavoriteList> {
       book: book,
       subtitle: _state,
       onTap: _openBook,
+      onDelete: deleteBook,
     );
+  }
+
+  deleteBook(Book book) async {
+    final sure = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('确认删除 ${book.name} ?'),
+        actions: [
+          FlatButton(
+              child: Text('确认'),
+              onPressed: () {
+                Navigator.pop(context, true);
+              }),
+          RaisedButton(
+              child: Text('取消'),
+              onPressed: () {
+                Navigator.pop(context, false);
+              }),
+        ],
+      ),
+    );
+    Provider.of<FavoriteData>(context, listen: false).remove(book);
   }
 
   @override
@@ -194,18 +217,21 @@ class FBookItem extends StatelessWidget {
   final Book book;
   final TextSpan subtitle;
   final void Function(Book book) onTap;
+  final void Function(Book book) onDelete;
 
   const FBookItem({
     Key key,
     @required this.book,
     @required this.subtitle,
     @required this.onTap,
+    @required this.onDelete,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => onTap(book),
+      onLongPress: () => onDelete(book),
       leading: Hero(
         tag: 'fb ${book.aid}',
         child: Image(
@@ -215,8 +241,9 @@ class FBookItem extends StatelessWidget {
           ),
         ),
       ),
-      title: Text(book.name, style: Theme.of(context).textTheme.body1),
-      subtitle: RichText(text: subtitle),
+      title: Text(book.version == 0 ? '[旧]${book.name}' : book.name,
+          style: Theme.of(context).textTheme.body1),
+      subtitle: book.version == 0 ? Text('不检查旧版藏书') : RichText(text: subtitle),
     );
   }
 }
