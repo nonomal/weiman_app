@@ -22,7 +22,7 @@
 
   export default Vue.extend({
     data () {
-      return { version: 1 }
+      return { version: process.env.VERSION }
     },
   })
 </script>
