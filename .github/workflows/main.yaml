@@ -17,13 +17,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: 变量
+        run: echo $USER_NAME $USER_EMAIL $WORK_DIR $PUBLISH_DIR $BRANCH
+
       - name: 仓库内容
         run: |
           ls -a
           echo ===end===
 
       - name: gh-pages内容
-        working-directory: $WORK_DIR
+        working-directory: ${{ WORK_DIR }}
         run: |
           ls -a
           echo ===end===
@@ -37,10 +40,6 @@ jobs:
 #          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 #          restore-keys: |
 #            ${{ runner.os }}-node-
-
-      - name: 变量
-        run: |
-          echo $USER_NAME $USER_EMAIL $WORK_DIR $PUBLISH_DIR $BRANCH
 
       - uses: actions/setup-node@v1
         with:
