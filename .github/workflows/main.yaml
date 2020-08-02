@@ -1,6 +1,5 @@
 name: 部署gh-pages
 
-
 on:
   push:
     branches: [ master ]
@@ -28,6 +27,7 @@ jobs:
       - name: 提交到GitHub pages
         run: |
           cd $PUBLISH_DIR
+          ls
           git init
           git config user.name $USER_NAME
           git config user.email $USER_EMAIL
