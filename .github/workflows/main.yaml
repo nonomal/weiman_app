@@ -16,8 +16,9 @@ jobs:
         with:
           node-version: '12'
           check-latest: true
+      - name: 安装依赖
+        run: npm install
       - name: 编译html
-      - run: npm install
-      - run: npm run generate:gh-pages
+        run: npm run generate:gh-pages
 
 
