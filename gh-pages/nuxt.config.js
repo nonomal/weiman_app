@@ -17,7 +17,7 @@ export default {
   ** Nuxt target
   ** See https://nuxtjs.org/api/configuration-target
   */
-  target: 'server',
+  target: 'static',
   /*
   ** Headers of the page
   ** See https://nuxtjs.org/api/configuration-head
@@ -59,12 +59,11 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    '@nuxt/typescript-build',
-  ],
+    '@nuxt/typescript-build'],
   /*
   ** Nuxt.js modules
   */
-  modules: [],
+  modules: ['@nuxtjs/axios'],
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/

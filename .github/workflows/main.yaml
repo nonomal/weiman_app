@@ -52,6 +52,11 @@ jobs:
           cd $WORK_DIR
           npm install
 
+      - name: 更新版本号
+        run: |
+          cd $WORK_DIR
+          npm run update_version
+
       - name: 编译html
         run: |
           cd $WORK_DIR

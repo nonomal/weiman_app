@@ -7,14 +7,16 @@
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
-    "generate:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt-ts generate",
+    "generate:gh-pages": "VERSION=1.0.11 DEPLOY_ENV=GH_PAGES nuxt-ts generate",
+    "update_version": "node yamlToJson.js",
     "test": "jest"
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^1.0.0",
     "ant-design-vue": "^1.6.4",
     "nuxt": "^2.14.0",
-    "yaml": "^1.10.0"
+    "yaml": "^1.10.0",
+    "@nuxtjs/axios": "^5.12.0"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.0",

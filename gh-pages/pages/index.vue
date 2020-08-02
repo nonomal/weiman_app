@@ -19,13 +19,10 @@
 
 <script lang="ts">
   import Vue from 'vue'
-  import fs from 'fs'
-  // @ts-ignore
-  import { version } from '../../config.json'
 
   export default Vue.extend({
     data () {
-      return { version }
+      return { version: 1 }
     },
   })
 </script>
