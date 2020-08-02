@@ -26,8 +26,9 @@ jobs:
           echo ===end===
 
       - name: gh-pages内容
-        working-directory: $WORK_DIR
+        # working-directory: $WORK_DIR
         run: |
+          cd $WORK_DIR
           ls -a
           echo ===end===
 
@@ -46,8 +47,9 @@ jobs:
           node-version: '12'
           check-latest: true
       - name: 安装依赖
-        working-directory: $WORK_DIR
-        run: npm install
+        run: |
+          cd $WORK_DIR
+          npm install
       - name: 编译html
         working-directory: $WORK_DIR
         run: npm run generate:gh-pages
