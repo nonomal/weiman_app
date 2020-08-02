@@ -34,6 +34,6 @@ jobs:
           git status
           git remote add origin https://$MY_SECRET@github.com/$GITHUB_REPOSITORY.git
           git checkout -b gh-pages
-          git add ./
+          git add --all
           git commit -m "Github Action自动编译"
-          git push
+          git push origin gh-pages -f
