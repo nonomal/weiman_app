@@ -11,8 +11,8 @@ jobs:
       COMMIT_SECRET: ${{secrets.COMMIT_SECRET}}
       USER_NAME: github-actions
       USER_EMAIL: github-actions@github.com
-      WORK_DIR: ./gh-pages
-      PUBLISH_DIR: ./gh-pages/dist
+      WORK_DIR: "./gh-pages/"
+      PUBLISH_DIR: "./gh-pages/dist/"
       BRANCH: gh-pages
     steps:
       - uses: actions/checkout@v2
@@ -26,9 +26,8 @@ jobs:
           echo ===end===
 
       - name: gh-pages内容
-        # working-directory: $WORK_DIR
+         working-directory: $WORK_DIR
         run: |
-          cd ./gh-pages
           ls -a
           echo ===end===
 
