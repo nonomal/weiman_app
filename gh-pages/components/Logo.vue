@@ -1,5 +1,5 @@
 <template>
-  <img src="logo.png" alt="logo" title="logo" class="NuxtLogo">
+  <img src="/weiman_app/logo.png" alt="logo" title="logo" class="NuxtLogo">
 </template>
 
 <style>
