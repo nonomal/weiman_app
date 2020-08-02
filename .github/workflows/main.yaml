@@ -16,6 +16,7 @@ jobs:
       BRANCH: gh-pages
     steps:
       - uses: actions/checkout@v2
+
       - name: 仓库内容
         run: |
           ls -a
@@ -41,7 +42,9 @@ jobs:
           check-latest: true
       - name: 安装依赖
         working-directory: $WORK_DIR
-        run: npm install
+        run: |
+          ls -a
+          npm install
       - name: 编译html
         working-directory: $WORK_DIR
         run: npm run generate:gh-pages
