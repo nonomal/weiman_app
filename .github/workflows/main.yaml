@@ -26,7 +26,7 @@ jobs:
           echo ===end===
 
       - name: gh-pages内容
-        working-directory: ${{ WORK_DIR }}
+        working-directory: $WORK_DIR
         run: |
           ls -a
           echo ===end===
