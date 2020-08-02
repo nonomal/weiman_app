@@ -32,27 +32,31 @@ jobs:
           ls -a
           echo ===end===
 
-#      - name: Cache node modules
-#        uses: actions/cache@v2
-#        env:
-#          cache-name: cache-node-modules
-#        with:
-#          path: ~/.npm
-#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-#          restore-keys: |
-#            ${{ runner.os }}-node-
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
           check-latest: true
+
       - name: 安装依赖
         run: |
           cd $WORK_DIR
           npm install
+
       - name: 编译html
-        working-directory: $WORK_DIR
-        run: npm run generate:gh-pages
+        run: |
+          cd $WORK_DIR
+          npm run generate:gh-pages
+
       - name: 提交到GitHub pages
         run: |
           cd $PUBLISH_DIR
