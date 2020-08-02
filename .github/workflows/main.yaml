@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       COMMIT_SECRET: ${{secrets.COMMIT_SECRET}}
+      USER_NAME: github-actions
+      USER_EMAIL: github-actions@github.com
+      PUBLISH_DIR: ./gh-page/dist
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -22,5 +25,15 @@ jobs:
       - name: 编译html
         working-directory: './gh-page'
         run: npm run generate:gh-pages
-
-
+      - name: 提交到GitHub pages
+        run: |
+          cd $PUBLISH_DIR
+          git init
+          git config user.name $USER_NAME
+          git config user.email $USER_EMAIL
+          git status
+          git remote add origin https://$MY_SECRET@github.com/$GITHUB_REPOSITORY.git
+          git checkout -b gh-pages
+          git add --all
+          git commit -m "Github Action自动编译"
+          git push
