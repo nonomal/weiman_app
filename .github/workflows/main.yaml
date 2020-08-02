@@ -17,8 +17,10 @@ jobs:
           node-version: '12'
           check-latest: true
       - name: 安装依赖
+        working-directory: './gh-page'
         run: npm install
       - name: 编译html
+        working-directory: './gh-page'
         run: npm run generate:gh-pages
 
 
