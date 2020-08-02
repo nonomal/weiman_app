@@ -16,6 +16,10 @@ jobs:
       BRANCH: gh-pages
     steps:
       - uses: actions/checkout@v2
+      - name: 仓库内容
+        run: |
+          ls -a
+          echo ===end===
 
 #      - name: Cache node modules
 #        uses: actions/cache@v2
