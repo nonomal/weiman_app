@@ -10603,7 +10603,7 @@ yallist@^4.0.0:
   resolved "https://registry.npm.taobao.org/yallist/download/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha1-m7knkNnA7/7GO+c1GeEaNQGaOnI=
 
-yaml@^1.7.2:
+yaml@^1.10.0, yaml@^1.7.2:
   version "1.10.0"
   resolved "https://registry.npm.taobao.org/yaml/download/yaml-1.10.0.tgz#3b593add944876077d4d683fee01081bd9fff31e"
   integrity sha1-O1k63ZRIdgd9TWg/7gEIG9n/8x4=

@@ -1,4 +1,4 @@
-# weiman v1.0.10
+# 微漫 v1.0.11 [宣传页面](https://nrop19.github.io/weiman_app)
 
 ### 微漫脱敏后的开源代码
 
