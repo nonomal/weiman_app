@@ -12,7 +12,7 @@ jobs:
       USER_NAME: github-actions
       USER_EMAIL: github-actions@github.com
       WORK_DIR: ./gh-pages
-      PUBLISH_DIR: ./gh-page/dist
+      PUBLISH_DIR: ./gh-pages/dist
     steps:
       - uses: actions/checkout@v2
 
