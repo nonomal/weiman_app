@@ -22,6 +22,12 @@ jobs:
           ls -a
           echo ===end===
 
+      - name: gh-pages内容
+        working-directory: $WORK_DIR
+        run: |
+          ls -a
+          echo ===end===
+
 #      - name: Cache node modules
 #        uses: actions/cache@v2
 #        env:
@@ -42,9 +48,7 @@ jobs:
           check-latest: true
       - name: 安装依赖
         working-directory: $WORK_DIR
-        run: |
-          ls -a
-          npm install
+        run: npm install
       - name: 编译html
         working-directory: $WORK_DIR
         run: npm run generate:gh-pages
