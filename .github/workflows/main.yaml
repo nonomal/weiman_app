@@ -13,6 +13,7 @@ jobs:
       USER_EMAIL: github-actions@github.com
       WORK_DIR: ./gh-pages
       PUBLISH_DIR: ./gh-pages/dist
+      BRANCH: gh-pages
     steps:
       - uses: actions/checkout@v2
 
@@ -33,6 +34,9 @@ jobs:
         with:
           node-version: '12'
           # check-latest: true
+      - name: 变量
+        run: |
+          echo $USER_NAME $USER_EMAIL $WORK_DIR $PUBLISH_DIR $BRANCH
       - name: 安装依赖
         working-directory: $WORK_DIR
         run: npm install
