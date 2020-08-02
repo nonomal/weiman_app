@@ -17,15 +17,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+#      - name: Cache node modules
+#        uses: actions/cache@v2
+#        env:
+#          cache-name: cache-node-modules
+#        with:
+#          path: ~/.npm
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-node-
 
       - name: 变量
         run: |
@@ -34,7 +34,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
-          # check-latest: true
+          check-latest: true
       - name: 安装依赖
         working-directory: $WORK_DIR
         run: npm install
