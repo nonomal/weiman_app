@@ -11,6 +11,7 @@ jobs:
       COMMIT_SECRET: ${{secrets.COMMIT_SECRET}}
       USER_NAME: github-actions
       USER_EMAIL: github-actions@github.com
+      WORK_DIR: ./gh-pages
       PUBLISH_DIR: ./gh-page/dist
     steps:
       - uses: actions/checkout@v2
@@ -33,21 +34,23 @@ jobs:
           node-version: '12'
           # check-latest: true
       - name: 安装依赖
-        working-directory: './gh-page'
+        working-directory: $WORK_DIR
         run: npm install
       - name: 编译html
-        working-directory: './gh-page'
+        working-directory: $WORK_DIR
         run: npm run generate:gh-pages
       - name: 提交到GitHub pages
         run: |
           cd $PUBLISH_DIR
+          echo ===files===
           ls
+          echo ===files===
           git init
           git config user.name $USER_NAME
           git config user.email $USER_EMAIL
-          git status
           git remote add origin https://$COMMIT_SECRET@github.com/$GITHUB_REPOSITORY.git
           git checkout -b gh-pages
           git add --all
+          git status
           git commit -m "Github Action自动编译"
           git push origin gh-pages -f
