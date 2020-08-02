@@ -3,7 +3,7 @@
     <div>
       <Logo/>
       <h1 class="title">微漫App</h1>
-      <h2 class="title">最新版本 {{version}}</h2>
+      <h2 class="title">最新版本 [version]</h2>
       <div class="links">
         <a href="https://github.com/nrop19/weiman_app/releases/latest" target="_blank" rel="noopener noreferrer"
            class="button--green">
@@ -20,11 +20,7 @@
 <script lang="ts">
   import Vue from 'vue'
 
-  export default Vue.extend({
-    data () {
-      return { version: process.env.VERSION }
-    },
-  })
+  export default Vue.extend({})
 </script>
 
 <style>
