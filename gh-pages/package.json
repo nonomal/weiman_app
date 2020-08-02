@@ -7,7 +7,7 @@
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
-    "generate:gh-pages": "VERSION=1.0.11 DEPLOY_ENV=GH_PAGES nuxt-ts generate",
+    "generate:gh-pages": "DEPLOY_ENV=GH_PAGES nuxt-ts generate",
     "update_version": "node yamlToJson.js",
     "test": "jest"
   },
