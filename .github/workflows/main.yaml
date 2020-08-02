@@ -1,0 +1,23 @@
+name: 部署gh-pages
+
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      COMMIT_SECRET: ${{secrets.COMMIT_SECRET}}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+          check-latest: true
+      - name: 编译html
+      - run: npm install
+      - run: npm run generate:gh-pages
+
+
