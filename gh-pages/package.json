@@ -13,7 +13,8 @@
   "dependencies": {
     "@nuxt/typescript-runtime": "^1.0.0",
     "ant-design-vue": "^1.6.4",
-    "nuxt": "^2.14.0"
+    "nuxt": "^2.14.0",
+    "yaml": "^1.10.0"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.0",
